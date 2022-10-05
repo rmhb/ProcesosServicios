@@ -18,7 +18,7 @@ public class EjercicioPowerShell {
     private final String powerShellScript;
 
     public EjercicioPowerShell(String[] argumentos) {
-        this.powerShellScript = "C:\\Users\\Nasa\\Desktop\\prueba.ps1";
+        this.powerShellScript = "C:\\Users\\NASA\\Documents\\NetBeansProjects\\EjerciciosServicios\\src\\scripts\\prueba.ps1";
         this.argumentos = argumentos;
     }
     
@@ -96,20 +96,19 @@ public class EjercicioPowerShell {
         public void usoInheritError(){
         // En este metodo vamos a utilizar un método de inherit que redirija la salida de error con redirectErrorStream(true). También vamos a utilizar un 
             int MaxTime = 500;
-            ProcessBuilder pb = new ProcessBuilder("cmd.exe","/c", "find", "caa", "*.*").inheritIO().redirectErrorStream(true);
+            ProcessBuilder pb = new ProcessBuilder("powershell.exe", "-Command", powerShellScript).inheritIO().redirectErrorStream(true);
             try{
               Process p =  pb.start();
+              printSTDOUT(p);
               if(!p.waitFor(MaxTime, TimeUnit.MILLISECONDS)){
                   p.destroy();
-                  System.out.println("El proceso no ha terminado en %d milisegundos");
+                  System.out.println("El proceso no ha terminado en "+ MaxTime+" milisegundos");
               }
             }catch(IOException e){
                 e.printStackTrace();
             }catch(InterruptedException e){
                 System.out.println("Ejecucion interrumpida "+e.getMessage());
             }
-            
-            
         }
         
     
