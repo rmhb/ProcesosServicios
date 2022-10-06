@@ -26,11 +26,8 @@ public class LanzaProceso {
             System.out.println("La ejecución de "+Arrays.toString(args)+
                     " devuelve código "+codigo+ " "+ (codigo == 0 ? " Accion completada correctamente " : " ERROR "));
         }catch(IOException e){
-            System.out.println("Error durante la ejecución del proceso");
-            System.out.println("Información Detallada");
-            System.out.println("___________________________________________");
+            System.out.println("Error durante la ejecución del proceso"); 
             e.printStackTrace();
-            System.out.println("___________________________________________");
             System.exit(2);
         }catch(InterruptedException e){
             System.err.println("Proceso Interrumpido");
