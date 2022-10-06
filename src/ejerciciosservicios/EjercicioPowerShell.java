@@ -23,9 +23,10 @@ public class EjercicioPowerShell {
     }
     
     public static void printResults(Process process) throws IOException {
-        // InputStreamReader It reads bytes and decodes them into characters using a specified charset
+        // A partir del stream binario que genera getInputStream se puede construir un stream de texto y sobre estos un stream de Buffers. Así obtenemos la salida como texto y línea a línea
+        // InputStreamReader It reads bytes and decodes them into characters using a specified charset. 
         // BufferedReader Reads text from a character-input stream, buffering characters so as to provide for the efficient reading of characters, arrays, and lines. 
-        // getInputStream()  Returns the input stream connected to the normal output of the subprocess
+        // getInputStream()  Returns the input stream connected to the normal output of the subprocess. Metodo de la clase Process que devueve un estream de entrada conectado con la salida estándar del proceso
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line = "";
         while ((line = reader.readLine()) != null) {
@@ -95,11 +96,29 @@ public class EjercicioPowerShell {
         }
         public void usoInheritError(){
         // En este metodo vamos a utilizar un método de inherit que redirija la salida de error con redirectErrorStream(true). También vamos a utilizar un 
-            int MaxTime = 500;
-            ProcessBuilder pb = new ProcessBuilder("powershell.exe", "-Command", powerShellScript).inheritIO().redirectErrorStream(true);
+        
+        /**
+         Los mecanismos para redireccionar stdin, stdout, stderror son:
+            1. El método inheritIO( ). Esta es Ja solución más sencilla. La entrada y la salida estándares y de error de los procesos creados se enlazan con las del proceso actual.
+            2. Los métodos 
+                • redirectlnput ( ) redirige Ja entrada desde: La entrada estándar del padre con redirect.INHERIT o bien desde un objeto File
+                • redirectOutput ( ) redirige la salida estándar de los nuevos procesos creados hacia: 
+                    *   La salida estándar del proceso padre con redirect.INHERIT 
+                    *   Un fichero, borrando contenidos actuales del fichero con f, de clase File.
+                    *   Un fichero, añadiendo a sus contenidos actuales con Redirect . appendTo ( f) .
+                    *   Ninguna parte, con lo que se descarta sin más con Redirect.DISCARD.
+                · redirectError ( ) funciona como redirectOutput ( ) , pero para la salida de error. 
+         */
+        
+        
+        
+            int MaxTime = 3000;
+//          ProcessBuilder pb = new ProcessBuilder("powershell.exe", "-Command", powerShellScript).inheritIO().redirectErrorStream(true); // Con el inheritIO veo lo que ha hecho el proceso del cmd junto con el redirectStream
+            ProcessBuilder pb= new ProcessBuilder("powershell.exe", "-Command", powerShellScript);
+            pb.redirectOutput( ProcessBuilder.Redirect.INHERIT); // eSTA ES OTRA forma de redireccionar la salida de los procesos hijos hacia los padres. 
             try{
               Process p =  pb.start();
-              printSTDOUT(p);
+//              printSTDOUT(p);
               if(!p.waitFor(MaxTime, TimeUnit.MILLISECONDS)){
                   p.destroy();
                   System.out.println("El proceso no ha terminado en "+ MaxTime+" milisegundos");
@@ -108,6 +127,53 @@ public class EjercicioPowerShell {
                 e.printStackTrace();
             }catch(InterruptedException e){
                 System.out.println("Ejecucion interrumpida "+e.getMessage());
+            }
+        }
+        public void EjercicioAlCambiaDirectorioProceso(){
+            // Prmero vamos a imprimir cual es el directorio del proceso 
+            ProcessBuilder pb1 = new ProcessBuilder().command("cmd.exe", "/C", "dir");
+            try{
+                
+                System.out.println("Directorio "+pb1.directory());
+                Process p1 = pb1.start();
+                printResults(p1);
+                pb1.directory(new File("C:/"));
+                System.out.println("Directorio "+pb1.directory());
+                Process p = pb1.start();
+                printResults(p);
+            }catch (IOException e){
+                System.out.println("Error "+e.getMessage());
+            }
+        }
+        public void rescribeEntrada(ProcessBuilder pb) throws IOException{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
+            String line = "";
+            System.out.println("Introduce dominio: ");
+            while ((line = reader.readLine()) != null && line.length() != 0 ) {
+                Process p = pb.start();
+                try( OutputStream os = p.getOutputStream();
+                    OutputStreamWriter writter = new OutputStreamWriter(os, "UTF-8"); ){
+                    writter.write(line);
+                }
+                try{
+                    p.waitFor();
+                }catch(InterruptedException e){
+                    System.out.println("Ejecución interrumpida " + e.getMessage());
+                }
+                System.out.println("Nombre dominio ");
+            }
+        }
+        public void ejemploNSLOOKUP(){
+            
+            ProcessBuilder pb = new ProcessBuilder("nslookup");
+            pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+           
+            try{
+                 rescribeEntrada(pb);
+
+            }catch (IOException e){
+                System.out.println("Error "+e.getMessage());
+                e.printStackTrace();
             }
         }
         
