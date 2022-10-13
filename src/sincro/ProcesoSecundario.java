@@ -11,6 +11,6 @@ package sincro;
 public class ProcesoSecundario {
     public static void main(String[] args){
         System.out.println("Proceso secundario...");
-        System.exit(103);
+        System.exit(-10);
     }
 }

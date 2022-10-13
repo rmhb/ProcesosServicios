@@ -16,8 +16,8 @@ public class Sincro {
     public static void main(String[] args) {
         Ejemplillos ej = new Ejemplillos();
 //        ej.eje1();
-//        ej.eje2();
-        ej.eje3();
+        ej.eje2();
+//        ej.eje3();
 //        ej.eje4_paraAlumnos();
        } 
 } 
