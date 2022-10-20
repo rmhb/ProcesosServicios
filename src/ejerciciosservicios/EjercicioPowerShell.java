@@ -107,7 +107,8 @@ public class EjercicioPowerShell {
                     *   Un fichero, borrando contenidos actuales del fichero con f, de clase File.
                     *   Un fichero, añadiendo a sus contenidos actuales con Redirect . appendTo ( f) .
                     *   Ninguna parte, con lo que se descarta sin más con Redirect.DISCARD.
-                · redirectError ( ) funciona como redirectOutput ( ) , pero para la salida de error. 
+                · redirectEr
+                * ror ( ) funciona como redirectOutput ( ) , pero para la salida de error. 
          */
         
         
