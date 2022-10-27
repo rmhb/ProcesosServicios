@@ -4,6 +4,8 @@
  */
 package serviciosud2;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author NASA
@@ -49,18 +51,60 @@ public class ServiciosUD2 {
 //        Otra razón es que a partir de la interfaz Runnable se pueden lanzar muchos hilos de ejecución sobre un único objeto. Sin embargo, si lo hacemos con Thread se genera un objeto por cada hilo. 
 
 
-//        El ejemplo 4. Muestra la implementación de un hilo mediante la interfaz Runnable y se crean múltiples hilos a partir de un único objeto. 
+////        El ejemplo 4. Muestra la implementación de un hilo mediante la interfaz Runnable y se crean múltiples hilos a partir de un único objeto. 
+//        
+//        System.out.println("Ejemplo 4. Uso interfaz Runnable para lanzar varios hilos sobre un mismo objeto");
+//        
+//        SecuMulti.CorredorRunnableObj p13 = new SecuMulti.CorredorRunnableObj("Alain", 3);
+//        new Thread(p13).start();
+//        new Thread(p13).start();
+//        new Thread(p13).start();
+//        new Thread(p13).start();
+//        // Con esto hemos conseguido que se ejecute el mismo trozo de codigo (metodo run) sobre el mismo objeto 4 veces. Como podemos ver sus atributos se han compartido, veremos mas adelante los posibles errores que genera esta concurrencia. 
         
-        System.out.println("Ejemplo 4. Uso interfaz Runnable para lanzar varios hilos sobre un mismo objeto");
+        // Ejemplo 5. Si lanzamos en un buccle 100 Thread podremos apreciar cccomo el numero de ccarreras corridas no llega a ser 100, estto se debe a que los hilos comparten los atributos. El último valor vistto no será 100, hay problema dee sincronización. 
+//        
+//         System.out.println("Ejemplo 5.. Uso interfaz Runnable para lanzar varios hilos sobre un mismo objeto en un bucle y mostrar errores de concurrenccia");
+//         SecuMulti.CorredorRunnableObj p5 = new SecuMulti.CorredorRunnableObj("Alain", 3);
+//         for (int i = 0; i < 1000; i++) {
+//            new Thread(p5).start();
+//        }
+
+
+//         // Para ver la cagada de sincronización. Con esto muchas de las hebras imprimirán el mismo valor por panttalla quedandose siempre por debajo de 1000. Debo introducir una operación de E/S antes del incremento de las carreras corridas en CorredorRunnableObj. Es decir, que mueva el código a: 
+////      public void corre(){
+////        try{
+////            System.out.println(this.name + " comienza a correr");
+////            Thread.sleep(this.tiempoCorriendo*1000);
+////            // Da el tiempo en milisegundo, lo multiplico por 1000 para que sean segundos
+////            this.carrerasRealizadas++; /// Con esto hago el incremento y después una operación de E/S que es costossa...
+////            System.out.println(this.name + " termina de correr");
+////            System.out.println("Carreras corridas: "+ this.carrerasRealizadas);
+////            
+////        }catch(InterruptedException e){
+////            e.printStackTrace();
+////        }
+////    }
         
-        SecuMulti.CorredorRunnableObj p13 = new SecuMulti.CorredorRunnableObj("Alain", 3);
-        new Thread(p13).start();
-        new Thread(p13).start();
-        new Thread(p13).start();
-        new Thread(p13).start();
-        // Con esto hemos conseguido que se ejecute el mismo trozo de codigo (metodo run) sobre el mismo objeto 4 veces. Como podemos ver sus atributos se han compartido, veremos mas adelante los posibles errores que genera esta concurrencia. 
-        
-        
+
+// Ejemplo 6. Estados de una hebra: 
+        SecuMulti.CorredorRunnableObj p6 = new SecuMulti.CorredorRunnableObj("Pronto", 3);
+         ArrayList<Thread.State> estados = new ArrayList();
+         Thread h1 = new Thread(p6);
+         estados.add(h1.getState());
+         h1.start();
+         while(h1.getState() != Thread.State.TERMINATED){
+             if(!estados.contains(h1.getState()))
+                 estados.add(h1.getState());
+         }
+        if(!estados.contains(h1.getState()))
+            estados.add(h1.getState());
+        for(Thread.State estado : estados){
+            System.out.println(estado);
+        }
+            
+
+
     }
     
 }
