@@ -190,15 +190,20 @@ public class ServiciosUD2 {
     // **** Ejemplo 10. Proveedor Cliente sin sincronización
 //     new Ej10.Test().runTest_unsyn();
      // **** Ejemplo 10_B. Proveedor Cliente con sincronización
-     new Ej10.Test().runTest_syn();
+//     new Ej10.Test().runTest_syn();
      
-     
+     // **** Ejemplo 11. Proveedor Cliente con sincro propia.. Buffer de un entero
+//     new Ej11.Test().runTestSynBuffer();
+     // Ejemplo 11-B NO HACER, NO ME FUNCIONA.
+//     new Ej11.Test().runTestBufferCiclicoArrayBlockingQueue();
+        new Ej11.Test().testBufferCircular();
       // Ejemplo coon Exchanger
     
 //    Este ejemplo funciona, porque el objeto sobre el que se intercambia información es el objeto ex, que es común tanto para task1 como para task2 al haberlo usado en la creación de las clases
 //    Exchanger<String> ex = new Exchanger<>();
 //    new Thread(new ej_Exanger_Task1(ex)).start();
 //    new Thread(new ej_Exanger_Task2(ex)).start();
+
     
      
     }

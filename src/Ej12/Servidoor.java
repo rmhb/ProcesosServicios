@@ -2,17 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Ej10;
+package Ej12;
+
+import Ej10.Buffer;
 import java.security.SecureRandom;
+
 /**
  *
  * @author NASA
  */
-public class Cliente implements Runnable {
+public class Servidoor implements Runnable{
     private static final SecureRandom generator = new SecureRandom();
     private final Buffer bufferCompartido; // reference to shared object
     // constructor
-    public Cliente(Buffer bf){
+    public Servidoor(Buffer bf){
         this.bufferCompartido = bf;
     }
     public void run() {
@@ -20,15 +23,12 @@ public class Cliente implements Runnable {
         for (int count = 1; count <= 10; count++) {
             try{ // sleep 0 to 3 seconds, then place value in Buffer
                 Thread.sleep(generator.nextInt(3000));
-                sum += bufferCompartido.blockingGet();
-                System.out.printf("suma cliente \t\t\t%2d%n", sum);
+                bufferCompartido.blockingPut(count); // set value in buffer
+                sum += count; // increment sum of values. Se suman todos los valores de 1 hasta 10: 1+2+3+4+5+6+7+8+9+10 = 55
            } catch (InterruptedException exception){
                 Thread.currentThread().interrupt();
            }
        }
-      System.out.print("-----------------------------------------------------------------------");
-      System.out.printf("%n%s %d%n%s%n", "| La suma total en cliente es ", sum, "| Terminando Cliente");
-      System.out.println("-----------------------------------------------------------------------");
+       System.out.printf("Proveedor ha acabado%nTerminando Proveedor%n");
    }
-    
 }
