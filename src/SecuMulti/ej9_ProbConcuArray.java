@@ -6,39 +6,38 @@ package SecuMulti;
 // Class that manages an integer array to be shared by multiple threads.
 import java.security.SecureRandom;
 import java.util.Arrays;
-/**
- *
- * @author NASA
- */
+
 public class ej9_ProbConcuArray {
-    private static final SecureRandom generator = new SecureRandom();
-    private final int[] array; // the shared integer array
-    private int writeIndex = 0; // shared index of next element to write
+    private static final SecureRandom generador = new SecureRandom();
+    private final int[] array; // Creamos un array de enteros que va a ser compartido por varios hilos
+    private int writeIndex = 0; // Definimos un índicee para controlar la escritura,
+    // indica la siguiente posición a escribir. Este índice también será compartido por varios hilos
     
-    // construct a SimpleArray of a given size
-    public ej9_ProbConcuArray(int size){
-        array = new int[size];
+    // Construir un array con el tamaño indicado
+    public ej9_ProbConcuArray(int tam){
+        array = new int[tam];
     }
 
-    // add a value to the shared array
-    public void add(int value){
-        int position = writeIndex; // store teh write index
+    // Añadir un valor al array compartido
+    public void add(int valor){
+        int posicion = writeIndex; // Guardamos el indice
         try {
-            // put thread to sleep for 0-499 milliseconds. Hacemos esto para que el problema de hebras no sincronizadas sea aún más obvio. 
-            Thread.sleep(generator.nextInt(500));
+            // Mandamos al hilo a dormir durante 0-499 ms.
+            // Hacemos esto para que el problema de hebras no sincronizadas sea aún más obvio. 
+            Thread.sleep(generador.nextInt(500));
         }
         catch (InterruptedException ex){
             Thread.currentThread().interrupt(); // re-interrupt the thread
         }
-        // put value in the appropriate element
-        array[position] = value;    
-        // Thread.currentThread().getName() primero se obtiene una refferencia a la hebra que se está ejecutando y se obtiene su nombre.
-        System.out.printf("%s wrote %2d to element %d.%n",Thread.currentThread().getName(), value, position);
-        ++writeIndex; //Increment index of elemento to be written next.
-        System.out.printf("Next write index: %d%n", writeIndex);
+        // Añadimos el valor en la posición del array
+        array[posicion] = valor;    
+        // Thread.currentThread().getName() -> Obtiene una refferencia a la hebra que se está ejecutando y se obtiene su nombre.
+        System.out.printf("%s Ha escrito %2d en la posicion %d.%n",Thread.currentThread().getName(), valor, posicion);
+        ++writeIndex; 
+        System.out.printf("Siguiente indice de escritura: %d%n", writeIndex);
     }
 
-    // used for outputting the contents of the shared integer array
+    // Finalmente mostramos el contenido del array compartido
     public String toString(){
         return Arrays.toString(array);
     }

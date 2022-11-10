@@ -10,15 +10,15 @@ import java.security.SecureRandom;
  */
 public class Cliente implements Runnable {
     private static final SecureRandom generator = new SecureRandom();
-    private final Buffer bufferCompartido; // reference to shared object
-    // constructor
+    private final Buffer bufferCompartido; // Referencia al buffer compartido
+    
     public Cliente(Buffer bf){
         this.bufferCompartido = bf;
     }
     public void run() {
         int sum = 0;
         for (int count = 1; count <= 10; count++) {
-            try{ // sleep 0 to 3 seconds, then place value in Buffer
+            try{ 
                 Thread.sleep(generator.nextInt(3000));
                 sum += bufferCompartido.blockingGet();
                 System.out.printf("suma cliente \t\t\t%2d%n", sum);
@@ -29,6 +29,5 @@ public class Cliente implements Runnable {
       System.out.print("-----------------------------------------------------------------------");
       System.out.printf("%n%s %d%n%s%n", "| La suma total en cliente es ", sum, "| Terminando Cliente");
       System.out.println("-----------------------------------------------------------------------");
-   }
-    
+   }  
 }

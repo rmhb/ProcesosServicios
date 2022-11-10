@@ -13,16 +13,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class Test {
     public static void runTest_unsyn () {
-        // create new thread pool with two threads
+        // Importar java.util.concurrent.*
+        // Creamos una nueva Pool de hilos
         ExecutorService exService = Executors.newCachedThreadPool();
-        // create UnsynchronizedBuffer to store ints
+        // Creamos un buffer, que almacenara enteros. Este buffer no esta sincronizado (clase unSynBuffer)
         Buffer bufferCompartido = new unSyncBuffer();
 
-        System.out.println( "Accion\t\tVaklor\tSuma Proveedor\tSuma Cliente");
+        System.out.println( "Accion\t\tValor\tSuma Proveedor\tSuma Cliente");
         System.out.printf(  "------\t\t-----\t--------------\t------------%n%n");
 
-        // execute the Producer and Consumer, giving each
-        // access to the sharedLocation
+        // Ejecutamos el Proveedor y el Cliente. 
+        // Asignando un hilo a cada uno, que además accederan ambos al buffer compartido
         exService.execute(new Proveedor(bufferCompartido));
         exService.execute(new Cliente(bufferCompartido));
         exService.shutdown();

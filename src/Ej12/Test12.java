@@ -15,7 +15,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class Test12 {
     
-    // create new thread pool with two threads
+    public void runTestSynBufferLockCondi(){
+           // create new thread pool with two threads
         ExecutorService exService = Executors.newCachedThreadPool();
         // create UnsynchronizedBuffer to store ints
         Buffer bufferCompartido = new SynBufferLockCondi();
@@ -28,6 +29,9 @@ public class Test12 {
             exService.awaitTermination(1, TimeUnit.MINUTES);
         }catch(InterruptedException e){
             e.printStackTrace();
-        }
+        } 
+    }
+    
+
     
 }

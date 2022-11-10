@@ -21,17 +21,17 @@ public class SynBufferLockCondi implements Buffer{
     private final Condition puedoEscribir = candado.newCondition();
     private final Condition puedoLeer = candado.newCondition();
     private int buffer = -1;
-    private boolean ocupado = false; // Si el buffer está lleno o vacío
+    private boolean lleno = false; // Si el buffer está lleno o vacío
     public void blockingPut(int value) throws InterruptedException{
         candado.lock(); // Coge candado
         try{
-            while(ocupado){
+            while(lleno){
                 System.out.println("Servidor intenta escribir");
                 displayState("Buffer lleno. Servidor espera");
                 puedoEscribir.await();
             }
             buffer = value;
-            ocupado = true;
+            lleno = true;
             displayState("Servidor esttá escribiendo "+buffer);
             puedoLeer.signalAll(); // Como he escrito un dato notifico al resto de hebras que estaban esperand sobre esta condición para que pueda leer
         }finally{
@@ -42,12 +42,12 @@ public class SynBufferLockCondi implements Buffer{
         int readValue = 0;
         candado.lock(); // Coge candado
         try{
-            while(!ocupado){
+            while(!lleno){
                 System.out.println("Cliente intenta leer");
                 displayState("Buffer vacío. Cliente espera");
                 puedoLeer.await();
             }
-            ocupado = false;
+            lleno = false;
             readValue = buffer;
             displayState("Cliente esttá leyendo "+readValue);
             puedoEscribir.signalAll(); // Como he escrito un dato notifico al resto de hebras que estaban esperand sobre esta condición para que pueda escribir
@@ -63,7 +63,7 @@ public class SynBufferLockCondi implements Buffer{
         // En este método vamos a poder ver qué tipos de acción está realizando el programa, lecutra o escritura del buffer y el estado del buffer
             try{
                 candado.lock();
-                System.out.printf("%-40s%d\t\t%b%n%n", operation, buffer, ocupado);
+                System.out.printf("%-40s%d\t\t%b%n%n", operation, buffer, lleno);
             }
             finally{
                 candado.unlock();

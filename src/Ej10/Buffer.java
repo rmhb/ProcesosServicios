@@ -4,15 +4,15 @@
  */
 package Ej10;
 
+
 /**
- *
- * @author NASA
- */
-// Buffer interface specifies methods called by Producer and Consumer.
+ * Generamos una interfaz Buffer, que especifica los métodos que usuarán el cliente
+ * y el proveedor para leer y escribir del Buffer
+ * */
 public interface Buffer{
-    // place int value into Buffer
+    // Escribe un valor de tipo entero (int) en el Buffer
     public void blockingPut(int value) throws InterruptedException;
 
-    // return int value from Buffer
+    // Lee un valor de tipo entero del Buffer
     public int blockingGet() throws InterruptedException;
-} // end interface Buffer
+} 

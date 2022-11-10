@@ -4,6 +4,7 @@
  */
 package serviciosud2;
 
+import Ej11.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,6 +113,23 @@ public class ServiciosUD2 {
 //        }
    
 
+// Ejemplo 6B
+// Declaración de un array de objetos de tipo Ej6B: 
+//Student[ ] studentObjects;  or Student studentObjects[];
+//Instantiate the array of objects – Class_Name obj[ ]= new Class_Name[Array_Length];
+//
+//    Ej6B arrayHilos[]=new Ej6B[5];
+//    for (int i=0; i<5;i++){
+//            arrayHilos[i]=new Ej6B();
+//            Thread hilo=new Thread(arrayHilos[i]);
+//            hilo.setName("Hilo "+i);
+//            if (i==0){
+//                hilo.setPriority(Thread.MAX_PRIORITY);
+//            }
+//            hilo.start();
+//    }
+
+
 ////  //*** Ejemplo 7. Proggramación de tareas con Timer y TimerTask
 //    ProcessBuilder pb = new ProcessBuilder("java", "src\\SecuMulti\\ejTimer.java");
 //    pb.redirectOutput(new File("dalida.txt"));
@@ -124,19 +142,21 @@ public class ServiciosUD2 {
 //    // Para carggarmelo buscar un proceso que ponga JAva... bla bla
 
 ////  //*** Ejemplo 8. Ejemplo de implemntaciónd e Runnablee y ejecución con executor. 
-    
+//    
 //     PrintTask task1 = new PrintTask("task1");
 //     PrintTask task2 = new PrintTask("task2");
 //     PrintTask task3 = new PrintTask("task3");
 //     System.out.println("Llamando a Executor...");
 //     ExecutorService exSer = Executors.newCachedThreadPool();
-//     exSer.execute(task1); //Ejecutar el argumento Runnable (en este caso PrintTask que implementa runnable
+//     //Ejecutar el argumento Runnable (en este caso, un objeto PrintTask que implementa runnable)
+//     exSer.execute(task1); 
 //     exSer.execute(task2);
 //     exSer.execute(task3);
-//     exSer.shutdown(); // él mismo decide cuando cancelar las hebras. Impide que se acepten nuevas task, pero continua ejecutando las existentes. 
-//        System.out.println("Tareas lanzadas, fin del código en el main....");
-        
-    // El programa termina, no espera a que terminen las task1 lanzadas. El ExecutorService terminará cuando las task1..3 hayan acabado. 
+//     exSer.shutdown(); // El mismo decide cuando cancelar las hebras. 
+//     //Impide que se acepten nuevas task, pero continua ejecutando las existentes. 
+//     System.out.println("Tareas lanzadas, fin del código en el main....");   
+//    // El programa termina, no espera a que terminen las tareas lanzadas. 
+//    // El ExecutorService terminará cuando las task1-3 hayan acabado. 
     
 //    //*** Ejemplo 9. Problema de concurrencia 
 //    
@@ -148,7 +168,13 @@ public class ServiciosUD2 {
 //    exSer.execute(w2);
 //    exSer.shutdown(); 
 //    try{
-////      Si recordamos executorService una veez haces shutdown regresa al programa princippal y deja el hilo ejecutandose. Con awaitTermination la hebra de este programa se espera a que termine las que ha lanzado, así pdoemos ver el resultaldo real del array una vez han terminado de ejecutarse las dos hebras o el tiempo máximo de ejecución se agote. 
+///**
+// * Si recordamos executorService una veez haces shutdown regresa al programa principal y,
+// * deja el hilo ejecutandose. 
+// * Con awaitTermination la hebra de este programa se espera a que termine las que ha lanzado,
+// * así pdoemos ver el resultaldo real del array una vez han terminado de ejecutarse las dos 
+// * hebras o el tiempo máximo de ejecución se agote. 
+//*/
 //        boolean finTask = exSer.awaitTermination(1, TimeUnit.MINUTES);
 //        if(finTask){
 //            System.out.printf("%nContenido del array: %n");
@@ -158,11 +184,11 @@ public class ServiciosUD2 {
 //        }
 //    }catch(InterruptedException e){
 //        e.printStackTrace();
-//    }
-//    
-//    // En la salida debemos ver cómo se sobreescriben valores. 
+//    }    
+// // En la salida debemos ver cómo se sobreescriben valores. 
     
-// ** Ejemplo 9-B uso de synchronized.
+ 
+// //** Ejemplo 9-B uso de synchronized.
 //    ej9_SynConcuArray1 a1 = new ej9_SynConcuArray1(6);
 //
 //    ej9B_ArrayWriter1 w1 = new ej9B_ArrayWriter1(a1, 1 );
@@ -183,7 +209,7 @@ public class ServiciosUD2 {
 //    }catch(InterruptedException e){
 //        e.printStackTrace();
 //    }
-
+//
 
    
     
@@ -196,7 +222,19 @@ public class ServiciosUD2 {
 //     new Ej11.Test().runTestSynBuffer();
      // Ejemplo 11-B NO HACER, NO ME FUNCIONA.
 //     new Ej11.Test().runTestBufferCiclicoArrayBlockingQueue();
-        new Ej11.Test().testBufferCircular();
+// Ejemplo 11-C
+//        new Ej11.Test().testBufferCircular();
+        
+        
+    // Ejemplo 12
+//        new Ej12.Test12().runTestSynBufferLockCondi();
+        
+    // Ejemplo 13
+//        System.out.println("Ejemplo 13. Interfaz swing con hilos");
+//        new Ej13.InterfazFibonacci().setVisible(true);
+
+
+    
       // Ejemplo coon Exchanger
     
 //    Este ejemplo funciona, porque el objeto sobre el que se intercambia información es el objeto ex, que es común tanto para task1 como para task2 al haberlo usado en la creación de las clases
@@ -204,7 +242,8 @@ public class ServiciosUD2 {
 //    new Thread(new ej_Exanger_Task1(ex)).start();
 //    new Thread(new ej_Exanger_Task2(ex)).start();
 
-    
+    // Actividades***********************************
+       
      
     }
     

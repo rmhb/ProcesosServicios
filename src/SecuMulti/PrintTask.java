@@ -28,9 +28,12 @@ public class PrintTask implements Runnable {
             e.printStackTrace();
             Thread.currentThread().interrupt(); // Volvemos a reinterrumpir la hebra. Debemos pasarle la hebra actual
         }
-        System.out.printf("%s ha regresado de sleep%n", taskName); // Aquí la hebra ya ha vuelto al estado ready y se le asiggna la cpu de nuevo. 
+        System.out.printf("%s ha regresado de sleep%n", taskName); 
+        // Aquí la hebra ya ha vuelto al estado ready y se le asiggna la cpu de nuevo. 
     }
-    // La tarea PrintTask se ejecuta cuando se invoca al método run de PrintTask. Aqu´´i es importante recoger la excepción con try catch y no haceer que el método run thorughst exception ya que el original no contempla este throught y puede dar problemas.
-    
-    
+    /**
+     * La tarea PrintTask se ejecuta cuando se invoca al método run de PrintTask. 
+     * Aquí es importante recoger la excepción con try catch y no haceer que el método run throws exception 
+     * ya que el original no contempla este throws y puede dar problemas.
+    */ 
 }
