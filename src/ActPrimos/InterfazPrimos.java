@@ -18,6 +18,7 @@ public class InterfazPrimos extends javax.swing.JFrame {
     public InterfazPrimos() {
         super("Buscando primos con SwingWorker");
         initComponents();
+        progressBar.setStringPainted(true);
         
     }
 
@@ -67,6 +68,11 @@ public class InterfazPrimos extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(102, 102, 102));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -136,6 +142,10 @@ public class InterfazPrimos extends javax.swing.JFrame {
         jButton2.setEnabled(true);
         calculaPrimos.execute();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+            calculaPrimos.cancel(true);    // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

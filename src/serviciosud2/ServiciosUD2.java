@@ -4,15 +4,30 @@
  */
 package serviciosud2;
 
+import Ej10.Buffer;
+import Ej10.Cliente;
+import Ej10.Proveedor;
+import Ej11.SynBuffer;
 import Ej11.Test;
+import Ej15.sumaVector;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import SecuMulti.*;
+import SpaPalacioPatos.*;
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Random;
 import java.util.concurrent.Exchanger;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.IntStream;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
  *
@@ -161,7 +176,7 @@ public class ServiciosUD2 {
 //    //*** Ejemplo 9. Problema de concurrencia 
 //    
 //    ej9_ProbConcuArray elArray = new ej9_ProbConcuArray(6);
-//    ej9_ArrayWriter w1 = new ej9_ArrayWriter(elArray, 1 );
+//    ej9_ArrayWriter w1 = new ej9_ArrayWriter(elArray, 21 );
 //    ej9_ArrayWriter w2 = new ej9_ArrayWriter(elArray, 11);
 //    ExecutorService exSer = Executors.newCachedThreadPool();
 //    exSer.execute(w1);
@@ -185,7 +200,7 @@ public class ServiciosUD2 {
 //    }catch(InterruptedException e){
 //        e.printStackTrace();
 //    }    
-// // En la salida debemos ver cómo se sobreescriben valores. 
+//// // En la salida debemos ver cómo se sobreescriben valores. 
     
  
 // //** Ejemplo 9-B uso de synchronized.
@@ -220,8 +235,7 @@ public class ServiciosUD2 {
      
      // **** Ejemplo 11. Proveedor Cliente con sincro propia.. Buffer de un entero
 //     new Ej11.Test().runTestSynBuffer();
-     // Ejemplo 11-B NO HACER, NO ME FUNCIONA.
-//     new Ej11.Test().runTestBufferCiclicoArrayBlockingQueue();
+
 // Ejemplo 11-C
 //        new Ej11.Test().testBufferCircular();
         
@@ -234,8 +248,11 @@ public class ServiciosUD2 {
 //        new Ej13.InterfazFibonacci().setVisible(true);
 
 
+    // Ejemplo 14. Fibonnaci
     
-      // Ejemplo coon Exchanger
+//Ejecutar directamente el fichero... paso de implementarlo aquí
+    
+// Ejemplo coon Exchanger
     
 //    Este ejemplo funciona, porque el objeto sobre el que se intercambia información es el objeto ex, que es común tanto para task1 como para task2 al haberlo usado en la creación de las clases
 //    Exchanger<String> ex = new Exchanger<>();
@@ -244,7 +261,79 @@ public class ServiciosUD2 {
 
     // Actividades***********************************
        
-     
+     // Act 2.2
+//        Actividades.act2_2.Parcela unaParcela;
+//        ExecutorService exSer = Executors.newCachedThreadPool();
+//        for (int i = 0; i < 20; i++) {
+//            
+//            unaParcela = new Actividades.act2_2.Parcela(new Random().nextLong(10000-500)+500,
+//                    new Random().nextLong(10000-500)+500,new Random().nextLong(10000-500)+500,
+//                   new Random().nextLong(10000-500)+500, "Parcela_"+i);
+//            exSer.execute(unaParcela);
+//        }
+//
+//        exSer.shutdown();
+
+// Actividad primos
+//
+//    ActPrimos.InterfazPrimos application = new ActPrimos.InterfazPrimos();
+//    application.setVisible(true);
+//    application.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    
+    // Ejemplo 15. Clase RecursiveTask, extiende de ForkJoinTask que implementa Future.
+    
+//    /* Construimos un vector de ejemplo...*/
+//        final int MAX_NUMEROS=32;
+//        SecureRandom generador = new SecureRandom();
+//        int[] numeros=new int[MAX_NUMEROS];
+//
+//        /*Y lo rellenamos con números*/
+//        for (int i=0; i<MAX_NUMEROS; i++) {
+//           
+//            numeros[i]=generador.nextInt(100);
+//        }
+//        int[]  miArrayNumeros = IntStream.generate(generador::nextInt).limit(MAX_NUMEROS).toArray();
+//        System.out.println(Arrays.toString(miArrayNumeros));
+//        System.out.println(Arrays.toString(numeros));
+//
+//        /* Esta clase gestionará el paralelismo de las tareas.
+//        Es una pool de subprocesos. Estos son ligeros ya que se 
+//        generan a partir de un fork del padre.*/
+//        ForkJoinPool pool=new ForkJoinPool();
+//
+//        /* Fabricamos un sumador inicial que intente sumar todo*/
+//        sumaVector sumador=new sumaVector(numeros, 0, 16);
+////        sumaVector sumador1=new sumaVector(miArrayNumeros, 0, (int) Math.floor(MAX_NUMEROS/2));
+//           sumaVector sumador1=new sumaVector(miArrayNumeros, 0, MAX_NUMEROS-1);
+//        /*Y la clase ForkJoinPool invocará a nuestro sumador lanzando
+//        los hilos, recogiendo los resultados y haciendo todo lo necesario
+//        para que al final solo tengamos que recoger el resultado*/
+//        pool.invoke(sumador);
+//        pool.invoke(sumador1);
+//
+//        /* Resultado que podemos ver aquí*/
+//        Long resultado,res2;
+//        try {
+//            resultado = sumador.get();
+//            res2 = sumador1.get();
+//            System.out.println("La suma es:"+resultado);
+//            System.out.println("La otra suma es:"+res2);
+//        } catch (InterruptedException | ExecutionException ex) {
+//            Logger.getLogger(ServiciosUD2.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+
+
+/**
+ * Actividad SPA PAlacio Patos. 
+ * El problema de esta solución es que siempre comenzamos a atender las camillas por la posición inicial
+ * Con lo que puede que haya clientes que nunca se atiendan
+ * */
+        SpaPalacioPatos.test t = new SpaPalacioPatos.test();
+//        t.runV1(); // Esta solución sufre de inanición
+//        t.runV2();
+           SpaPalacioPatos.test.testSPAv3();
+        
     }
     
 }

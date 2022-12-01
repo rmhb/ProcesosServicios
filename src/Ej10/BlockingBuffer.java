@@ -12,6 +12,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class BlockingBuffer implements Buffer {
     private final ArrayBlockingQueue<Integer> bf;
+    // ArrayBlockingQueue hace el trabajo por nosotros. 
 
     public BlockingBuffer() {
         bf = new ArrayBlockingQueue<Integer>(1);
@@ -22,10 +23,8 @@ public class BlockingBuffer implements Buffer {
         System.out.printf("%s%2d\t%s%d%n","Proveedor --> ",value, "Buffer cells occupied: ", bf.size());
     }
     public int blockingGet()throws InterruptedException{
-        int readValue = bf.take(); // remove value from buffer
+        int readValue = bf.take(); // leer valor del buffer
         System.out.printf("%s%2d\t%s%d%n","Cliente lee --> ",readValue, "Buffer cells occupied: ", bf.size());
         return readValue;
-    }
-    
-    
+    } 
 }

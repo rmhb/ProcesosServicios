@@ -33,7 +33,11 @@ public class SynBufferLockCondi implements Buffer{
             buffer = value;
             lleno = true;
             displayState("Servidor esttá escribiendo "+buffer);
-            puedoLeer.signalAll(); // Como he escrito un dato notifico al resto de hebras que estaban esperand sobre esta condición para que pueda leer
+            puedoLeer.signalAll(); 
+/**
+ * Como he escrito un dato notifico al resto de hebras que estaban esperand
+ * sobre esta condición para que pueda leer
+ */
         }finally{
             candado.unlock();
         }
@@ -50,17 +54,22 @@ public class SynBufferLockCondi implements Buffer{
             lleno = false;
             readValue = buffer;
             displayState("Cliente esttá leyendo "+readValue);
-            puedoEscribir.signalAll(); // Como he escrito un dato notifico al resto de hebras que estaban esperand sobre esta condición para que pueda escribir
+            puedoEscribir.signalAll(); 
+/**
+ * Como he escrito un dato notifico al resto de hebras que estaban esperand 
+ * sobre esta condición para que pueda escribir
+ * */
         }finally{
             candado.unlock();
         }
         return readValue;
     }
-    
-    
-    
    private void displayState(String operation){
-        // En este método vamos a poder ver qué tipos de acción está realizando el programa, lecutra o escritura del buffer y el estado del buffer
+    /**
+     *  En este método vamos a poder ver qué tipos de acción está 
+     * realizando el programa, lecutra o escritura del buffer y el
+     * estado del buffer
+     * */
             try{
                 candado.lock();
                 System.out.printf("%-40s%d\t\t%b%n%n", operation, buffer, lleno);

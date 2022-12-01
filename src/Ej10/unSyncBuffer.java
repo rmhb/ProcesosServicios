@@ -20,5 +20,5 @@ public class unSyncBuffer implements Buffer {
         System.out.printf("Cliente lee \t%2d", buffer);
         return buffer;
     }
-    
 }
+

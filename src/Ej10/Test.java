@@ -36,16 +36,17 @@ public class Test {
     
     // Este método es para el 10B
     public static void runTest_syn () {
-        // create new thread pool with two threads
+        // Creamos un nuevo thread pool para nuestros hilos
         ExecutorService exService = Executors.newCachedThreadPool();
-        // create UnsynchronizedBuffer to store ints
+        // creamos un buffer compartido que en este caso se bloquea para lecturas y escrituras
         Buffer bufferCompartido = new BlockingBuffer();
 
-        // execute the Producer and Consumer, giving each access to the sharedLocation
+        // Ejecucion del proveedor y del cliente dando acceso al buffer compartido
         exService.execute(new Proveedor(bufferCompartido));
         exService.execute(new Cliente(bufferCompartido));
         exService.shutdown();
         try{
+            // Esperamos a que termine durante un tiempo maximo de 1 minuto
             exService.awaitTermination(1, TimeUnit.MINUTES);
         }catch(InterruptedException e){
             e.printStackTrace();

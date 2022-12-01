@@ -6,7 +6,12 @@ package Ej10;
 import java.security.SecureRandom;
 /**
  *
- * @author NASA
+ * En este ejemplo el proveedor va a ir escribiendo datos en un buffer
+ * que es compartido también por el cliente o consumidor. El objetivo es comprobar 
+ * que lee el cliente del buffer, para ello, vamos a hacer un sumador de numeros
+ * El cliente va a ir anotando en la variable suma, la suma de todos los valores
+ * que ha leído del buffer. Para hacer la comprobacion tabmien haremos que el
+ * proveedor escriba la suma de los elementos que ha ido escribiendo. 
  */
 public class Cliente implements Runnable {
     private static final SecureRandom generator = new SecureRandom();
